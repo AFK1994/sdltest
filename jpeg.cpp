@@ -213,7 +213,39 @@ DHT* ParseDHT(std::ifstream* fin) {
 		std::cout << (int)dHT->vt[i] << ",";
 	}
 	std::cout << std::endl;
+	GetDHT(dHT->data, dHT->vt);
 	return dHT;
+}
+
+uint8_t* GetDHT(uint8_t data[16], uint8_t* vt) {
+	int num = 0;
+	for (int i = 0; i < 16;i++) {
+		num += data[i];
+	}
+	std::cout << "DHT.num:" << num << std::endl;
+
+	uint8_t* table = (uint8_t*)malloc(num * sizeof(uint8_t));
+
+	uint16_t code=0;
+	int idx = 0;
+	std::cout << "DHT.code:";
+	for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < data[i]; j++) {
+			table[idx] = vt[idx];
+			std::cout << (int)code << ",";
+			code ++;
+			idx++;
+		}
+		code=code << 1;
+	}
+	std::cout << std::endl;
+
+	std::cout << "DHT.table:";
+	for (int i = 0; i < num; i++) {
+		std::cout << (int)table[i] << ",";
+	}
+	std::cout << std::endl;
+	return table;
 }
 
 SOSComponent* ParseSOSComponent(std::ifstream* fin) {

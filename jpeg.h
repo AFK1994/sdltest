@@ -89,6 +89,9 @@ struct DHT
 
 DHT* ParseDHT(std::ifstream* fin);
 
+//根据范式哈夫曼编码从DHT中构造查找表
+uint8_t* GetDHT(uint8_t data[16], uint8_t* vt);
+
 //SOS组件
 struct SOSComponent
 {
